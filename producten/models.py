@@ -27,7 +27,7 @@ class Product(models.Model):
     beschrijving = models.CharField(max_length=4000, null=True)
 
     class Meta:
-        abstract=True
+        abstract = True
 
 class SimpelProduct(Product):
     """Een simpel product. Simpel betekend hier niet samengesteld"""
@@ -45,6 +45,7 @@ class SamengesteldProductLijn(models.Model):
     product"""
 
     simpelProduct = models.ForeignKey(SimpelProduct)
+    samengesteldProduct = models.ForeignKey("SamengesteldProduct")
     aantal = models.IntegerField()
 
 
@@ -52,7 +53,12 @@ class SamengesteldProduct(Product):
     """Een samengesteld product bevat een aantal simpele producten, plus
     een aantal"""
 
-    simpeleProducten = models.ManyToManyField(SamengesteldProductLijn)
+    items = models.ManyToManyField(SimpelProduct, through=SamengesteldProductLijn)
 
     def __unicode__(self):
         return "%s <%s>" % (self.naam, ','.join(self.simpeleProducten))
+
+    def prijs(self):
+        """Berekent de prijs door de individuele prijzen op te tellen"""
+        return sum((p.simpelProduct.prijs * p.aantal for p in self.samengesteldproductlijn_set.all()))
+
