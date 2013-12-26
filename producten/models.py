@@ -28,6 +28,7 @@ class Product(models.Model):
 
     class Meta:
         abstract = True
+        ordering = ["-naam"]
 
 class SimpelProduct(Product):
     """Een simpel product. Simpel betekend hier niet samengesteld"""
@@ -35,6 +36,9 @@ class SimpelProduct(Product):
     leverancier = models.ForeignKey(Leverancier)
     prijs = models.DecimalField(max_digits=6, decimal_places=2)
     eenheid = models.ForeignKey(Eenheid)
+
+    def klembord_lijn(self):
+        return "%s\t%.2f" % (self.naam, self.prijs)
 
     def __unicode__(self):
         return "%s (%.2f/%s)" % (self.naam, self.prijs, self.eenheid.afkorting)
