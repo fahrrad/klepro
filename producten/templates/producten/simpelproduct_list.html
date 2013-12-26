@@ -3,20 +3,32 @@
 {% load staticfiles %}
 
 {% block content %}
-<form action="" method="GET">
-    {% csrf_token %}
-    naam:<input type="text" name="naam" />
-    leverancier:<input type="text" name="leverancier">
-    <input type="submit" value="Zoek">
-</form>
-
     <h2>Producten</h2>
-    <table>
+
+    <form action="" method="GET">
+        {% csrf_token %}
+        <span class="input-group">
+            <span class="input-group-addon">naam</span>
+            <input type="text" class="form-control" name="naam" placeholder="Naam"
+                   onKeyPress="return checkSubmit(event)"/>
+        </span>
+
+        <span class="input-group">
+            <span class="input-group-addon">leverancier</span>
+            <input type="text" class="form-control" name="leverancier" placeholder="Leverancier"
+                   onKeyPress="return checkSubmit(event)"/>
+        </span>
+
+        <input type="submit" style="display:none"/>
+    </form>
+
+    <table class="table">
         <tr>
             <th>Naam</th>
             <th>Beschrijving</th>
             <th>Leverancier</th>
             <th>Prijs</th>
+            <th>Eenheid</th>
             <th></th>
         </tr>
         {% for product in object_list %}
@@ -24,7 +36,8 @@
             <td class="product_naam">{{ product.naam }} </td>
             <td class="product_beschrijving">{{ product.beschrijving }}</td>
             <td class="product_leverancier">{{ product.leverancier.naam}}</td>
-            <td class="product_prijs">{{ product.prijs}} / {{ product.eenheid.afkorting }}</td>
+            <td class="product_prijs">{{ product.prijs}} </td>
+            <td class="product_eenheid">{{ product.eenheid.afkorting }}</td>
             <td class="hidden">{{ product.klembord_lijn }}</td>
             <td>
                 <button class="klembord_button">klembord</button>
@@ -36,7 +49,6 @@
 
 
 {% block scripts %}
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="{% static "producten/main.js" %}" ></script>
 {% endblock %}
 

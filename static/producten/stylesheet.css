@@ -1,3 +1,7 @@
 .hidden {
     display: none;
 }
+
+.product_eenheid{
+    text-align: left;
+}

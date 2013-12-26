@@ -8,3 +8,11 @@ $(document).ready(function(){
 function copyToClipboard(text) {
   window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
 }
+
+function checkSubmit(e)
+{
+   if(e && e.keyCode == 13)
+   {
+      document.forms[0].submit();
+   }
+}

@@ -3,19 +3,33 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+
     <title>klepro</title>
     {% block stylesheets %}
     {% endblock %}
 </head>
-{% block content %}
 
-{% endblock %}
+<body>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+
+    <!--  JQuery -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    {% block scripts %}{% endblock %}
+
+</body>
 
 <footer>
     <a href="/admin">admin</a>
-
 </footer>
-{% block scripts %}
-    statix
-{% endblock %}
 </html>
