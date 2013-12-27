@@ -45,9 +45,22 @@
         </tr>
         {% endfor %}
 
-        <a href="{% url 'admin:producten_simpelproduct_add' %}">Product toevoegen</a>
+        <a href="{% url 'admin:producten_simpelproduct_add' %}?next={{ request.path }}">Product toevoegen</a>
 
     </table>
+    <div class="pagination">
+    {% if is_paginated %}
+        <ul class="pagination">
+                {% for pg in paginator.page_range %}
+                    {% ifequal pg paginator.number %}
+                        <li class="active"><a href="?page={{ pg }}">{{ pg }}</a></li>
+                    {% else %}
+                        <li><a href="?page={{ pg }}">{{ pg }}</a></li>
+                    {% endifequal %}
+                {% endfor %}
+        </ul>
+    {% endif %}
+    </div>
 {% endblock %}
 
 

@@ -2,7 +2,6 @@ from django.conf.urls import patterns, include, url
 
 from django.contrib import admin
 
-from producten.views import ProductDetailView
 from producten.views import ProductenListView
 
 admin.autodiscover()

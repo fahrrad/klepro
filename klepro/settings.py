@@ -16,8 +16,8 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-  'django.core.context_processors.request',
-  'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.request',
+    'django.contrib.auth.context_processors.auth',
 )
 
 

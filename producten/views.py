@@ -11,10 +11,7 @@ logger = getLogger(__name__)
 
 
 class ProductenListView(FilterMixin, ListView):
-    allowed_filters = {'naam': 'naam__contains',
-                       'leverancier': 'leverancier__naam__contains'}
+    allowed_filters = {'naam': 'naam__icontains',
+                       'leverancier': 'leverancier__naam__icontains'}
     model = SimpelProduct
-
-
-class ProductDetailView(DetailView):
-    model = SimpelProduct
+    paginate_by = 2
