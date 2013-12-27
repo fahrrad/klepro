@@ -14,11 +14,6 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(
-        regex=r"^producten/(?P<pk>\d+)/$",
-        view=ProductDetailView.as_view(),
-        name="detail"
-    ),
-    url(
         regex=r'^producten/$',
         view=ProductenListView.as_view(),
         name="list"

@@ -33,17 +33,20 @@
         </tr>
         {% for product in object_list %}
         <tr>
-            <td class="product_naam">{{ product.naam }} </td>
+            <td class="product_naam"><a href="{% url "admin:producten_simpelproduct_change" product.pk %}?next={{ request.path }}"> {{ product.naam }}</a> </td>
             <td class="product_beschrijving">{{ product.beschrijving }}</td>
             <td class="product_leverancier">{{ product.leverancier.naam}}</td>
             <td class="product_prijs">{{ product.prijs}} </td>
             <td class="product_eenheid">{{ product.eenheid.afkorting }}</td>
             <td class="hidden">{{ product.klembord_lijn }}</td>
             <td>
-                <button class="klembord_button">klembord</button>
+                <button class="klembord_button btn btn-xs">klembord</button>
             </td>
         </tr>
         {% endfor %}
+
+        <a href="{% url 'admin:producten_simpelproduct_add' %}">Product toevoegen</a>
+
     </table>
 {% endblock %}
 

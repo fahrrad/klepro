@@ -1,5 +1,6 @@
 # producten/views.py
 from logging import getLogger
+from django.forms import forms
 
 from django.views.generic import DetailView, ListView
 from klepro.commons import FilterMixin
