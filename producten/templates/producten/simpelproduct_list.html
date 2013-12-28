@@ -30,7 +30,7 @@
     <table class="table">
         <tr>
             <th>Naam</th>
-            <th></th>
+            <th>Kopieer</th>
             <th>Leverancier</th>
             <th>Prijs</th>
             <th>Eenheid</th>
@@ -40,7 +40,7 @@
         <tr>
             <td class="product_naam"><a href="{% url "admin:producten_simpelproduct_change" product.pk %}?next={{ request.path }}"> {{ product.naam }}</a> </td>
             <td>
-                <button class="klembord_button btn btn-xs">klembord</button>
+                <span class="glyphicon glyphicon-euro klembord_button {{ product.prijs_css_class }}"></span>
             </td>
             <td class="product_leverancier">{{ product.leverancier.naam}}</td>
             <td class="product_prijs">{{ product.prijs}} </td>

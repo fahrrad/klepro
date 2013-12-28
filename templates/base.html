@@ -17,11 +17,18 @@
 <body>
 
     <div class="container col-lg-2"/>
+    {% block bar_left %}
+
+    {% endblock %}
+    </div>
 
     <div class="container col-lg-8">
-        {% block content %}{% endblock %}
+        {% block content %}
+
+        {% endblock %}
     </div>
-    <div class="container col-lg-2"/>
+
+    <div class="container col-lg-2"/></div>
 
 
     <!--  JQuery -->

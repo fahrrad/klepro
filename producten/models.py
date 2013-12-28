@@ -1,3 +1,5 @@
+from random import choice
+
 from django.db import models
 
 
@@ -37,14 +39,14 @@ class SimpelProduct(Product):
     prijs = models.DecimalField(max_digits=6, decimal_places=2)
     eenheid = models.ForeignKey(Eenheid)
 
-
-
     def klembord_lijn(self):
         return "%s\t%.2f\t%s" % (self.naam, self.prijs, self.eenheid.afkorting, )
 
     def __unicode__(self):
         return "%s (%.2f/%s)" % (self.naam, self.prijs, self.eenheid.afkorting)
 
+    def prijs_css_class(self):
+        return 'prijs_class_' + choice(['normaal', 'waarschuwing', 'fout'])
 
 class SamengesteldProductLijn(models.Model):
     """Een simpel product met aantal, dat deel is van een samengesteld
