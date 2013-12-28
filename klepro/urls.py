@@ -1,10 +1,12 @@
 from django.conf.urls import patterns, include, url
 
 from django.contrib import admin
+from django.views.generic import TemplateView, RedirectView
 
 from producten.views import ProductenListView
 
 admin.autodiscover()
+
 
 urlpatterns = patterns('',
     # Examples:
@@ -17,4 +19,10 @@ urlpatterns = patterns('',
         view=ProductenListView.as_view(),
         name="list"
     ),
+    url(r'^login/$', 'django.contrib.auth.views.login', name="login"),
+    url(
+        regex='^$',
+        view=RedirectView.as_view(url='/producten'),
+        name='start',
+    )
 )

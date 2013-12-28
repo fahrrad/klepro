@@ -1,6 +1,8 @@
 # producten/views.py
 from logging import getLogger
+from django.contrib.auth.decorators import login_required
 from django.forms import forms
+from django.utils.decorators import method_decorator
 
 from django.views.generic import DetailView, ListView
 from klepro.commons import FilterMixin
@@ -15,3 +17,9 @@ class ProductenListView(FilterMixin, ListView):
                        'leverancier': 'leverancier__naam__icontains'}
     model = SimpelProduct
     paginate_by = 25
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(ProductenListView, self).dispatch(request, *args, **kwargs)
+
+

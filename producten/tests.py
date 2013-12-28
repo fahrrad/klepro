@@ -1,3 +1,6 @@
+
+import datetime
+from dateutil.relativedelta import relativedelta
 from django.db import IntegrityError
 from django.test import TestCase
 from logging import getLogger
@@ -17,7 +20,7 @@ class ProductTestCase(TestCase):
         self.kg = Eenheid.objects.create(naam="kilogram", afkorting="kg")
 
         # leveranciers
-        self.vdba = Leverancier.objects.create(naam="VDBA", email="vdba@gmail.com")
+        self.vdba = Leverancier.objects.create(naam="VDBA", email="test@gmail.com")
         self.tuinen = Leverancier.objects.create(naam="Tuinen Burssens")
 
         # simpel producten
@@ -41,7 +44,7 @@ class ProductTestCase(TestCase):
         self.assertIsNotNone(p)
 
     def test_vind_leverancier(self):
-        l = Leverancier.objects.filter(email="vdba@gmail.com")
+        l = Leverancier.objects.filter(email="test@gmail.com")
         count = l.count()
         self.assertEqual(count, 1)
 
@@ -66,8 +69,34 @@ class ProductTestCase(TestCase):
     def test_prijs_samengesteld_product(self):
         self.assertAlmostEqual(59.00, self.gras_zaaien.prijs())
 
+    def test_prijs_code(self):
+        self.beton.laatste_aanpassing = datetime.date.today() - relativedelta(weeks=6)
+        self.assertEqual('normaal', self.beton.prijs_code())
 
 
+        self.beton.laatste_aanpassing = datetime.date.today() - relativedelta(years=1, months=6)
+        self.assertEqual('waarschuwing', self.beton.prijs_code())
+
+        self.beton.laatste_aanpassing = datetime.date.today() - relativedelta(years=2)
+        self.assertEqual('fout', self.beton.prijs_code())
+
+
+    def test_unq_naam_leverancier(self):
+        # save nog een beton, van andere leverancier
+        SimpelProduct.objects.create(naam="beton", leverancier=self.tuinen,
+                                     beschrijving="Zeer hard", prijs=54.0,
+                                     eenheid=self.kub)
+
+        betons = SimpelProduct.objects.filter(naam="beton")
+        self.assertEqual(2, betons.count())
+
+        # maar 2 * beton bij tuinen kan niet!
+        fout_beton = SimpelProduct(naam="beton", leverancier=self.tuinen,
+                                     beschrijving="Zeer hard", prijs=54.0,
+                                     eenheid=self.kub)
+
+        with self.assertRaises(IntegrityError):
+            fout_beton.save()
 
 
 

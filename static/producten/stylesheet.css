@@ -25,3 +25,7 @@ tr.product_beschrijving {
 .prijs_class_fout{
     text-shadow: 5px 5px 5px red;
 }
+
+.prijs_class_geen{
+    text-shadow: 5px 5px 5px blue;
+}

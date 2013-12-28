@@ -1,4 +1,6 @@
 from random import choice
+from dateutil.relativedelta import relativedelta
+import datetime
 
 from django.db import models
 
@@ -18,14 +20,14 @@ class Leverancier(models.Model):
     """Class die een leverancier voorsteld"""
 
     naam = models.CharField(max_length=255)
-    email = models.EmailField(max_length=255, unique=True)
+    email = models.EmailField(max_length=255, unique=True, blank=True)
 
     def __unicode__(self):
         return "%s (%s)" % (self.naam, self.email)
 
 
 class Product(models.Model):
-    naam = models.CharField(max_length=255, unique=True)
+    naam = models.CharField(max_length=255)
     beschrijving = models.CharField(max_length=4000, null=True)
 
     class Meta:
@@ -39,6 +41,8 @@ class SimpelProduct(Product):
     prijs = models.DecimalField(max_digits=6, decimal_places=2)
     eenheid = models.ForeignKey(Eenheid)
 
+    laatste_aanpassing = models.DateField( null=True)
+
     def klembord_lijn(self):
         return "%s\t%.2f\t%s" % (self.naam, self.prijs, self.eenheid.afkorting, )
 
@@ -46,7 +50,21 @@ class SimpelProduct(Product):
         return "%s (%.2f/%s)" % (self.naam, self.prijs, self.eenheid.afkorting)
 
     def prijs_code(self):
-        return choice(['normaal', 'waarschuwing', 'fout'])
+        today = datetime.date.today()
+        td_1y = relativedelta(years=1)
+        td_2y = relativedelta(years=2)
+
+        if self.laatste_aanpassing:
+            if today - td_1y < self.laatste_aanpassing <= today:
+                return 'normaal'
+            elif today - td_2y < self.laatste_aanpassing <= today - td_1y:
+                return 'waarschuwing'
+            return 'fout'
+
+        return 'geen'
+
+    class Meta:
+        unique_together = ['naam', 'leverancier']
 
 class SamengesteldProductLijn(models.Model):
     """Een simpel product met aantal, dat deel is van een samengesteld
