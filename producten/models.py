@@ -28,17 +28,19 @@ class Product(models.Model):
 
     class Meta:
         abstract = True
-        ordering = ["-naam"]
+        ordering = ["naam"]
 
 class SimpelProduct(Product):
-    """Een simpel product. Simpel betekend hier niet samengesteld"""
+    """Een simpel product. Simpel betekent hier niet samengesteld"""
 
     leverancier = models.ForeignKey(Leverancier)
     prijs = models.DecimalField(max_digits=6, decimal_places=2)
     eenheid = models.ForeignKey(Eenheid)
 
+
+
     def klembord_lijn(self):
-        return "%s\t%.2f" % (self.naam, self.prijs)
+        return "%s\t%.2f\t%s" % (self.naam, self.prijs, self.eenheid.afkorting, )
 
     def __unicode__(self):
         return "%s (%.2f/%s)" % (self.naam, self.prijs, self.eenheid.afkorting)
@@ -66,3 +68,15 @@ class SamengesteldProduct(Product):
         """Berekent de prijs door de individuele prijzen op te tellen"""
         return sum((p.simpelProduct.prijs * p.aantal for p in self.samengesteldproductlijn_set.all()))
 
+
+def import_product(naam_q, lev_q, eenheid_q, prijs):
+    leverancier = Leverancier.objects.get(naam=lev_q)
+    eenheid = Eenheid.objects.get(afkorting=eenheid_q)
+    SimpelProduct.objects.create(naam=naam_q.lower(),
+                                 leverancier=leverancier, eenheid=eenheid, prijs=prijs)
+
+def import_producten_file(filename):
+    for naam, leverancier, eenheid, prijs in \
+        (x.split('\t') for x in open(filename, 'rb')):
+
+        print naam, leverancier, eenheid, prijs

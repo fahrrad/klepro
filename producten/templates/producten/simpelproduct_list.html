@@ -3,51 +3,58 @@
 {% load staticfiles %}
 
 {% block content %}
-    <h2>Producten</h2>
+    <h1>Producten</h1>
+    <h3>Zoeken</h3>
 
-    <form action="" method="GET">
+    <form action="" method="GET" role="form">
         {% csrf_token %}
-        <span class="input-group">
-            <span class="input-group-addon">naam</span>
-            <input type="text" class="form-control" name="naam" placeholder="Naam"
+        <div class="form-group">
+            <label for="naamInput">Naam</label>
+            <input id="naamInput" type="text" class="form-control" name="naam" placeholder="Naam"
                    onKeyPress="return checkSubmit(event)"/>
-        </span>
+        </div>
 
-        <span class="input-group">
-            <span class="input-group-addon">leverancier</span>
-            <input type="text" class="form-control" name="leverancier" placeholder="Leverancier"
+        <div class="form-group">
+            <label for="leverancierInput">Leverancier</label>
+            <input id="leverancierInput" type="text" class="form-control" name="leverancier" placeholder="Leverancier"
                    onKeyPress="return checkSubmit(event)"/>
-        </span>
+        </div>
 
-        <input type="submit" style="display:none"/>
+        <input class="btn" type="submit" value="zoeken"/>
+
+
     </form>
+
+    <h3>Resultaat</h3>
 
     <table class="table">
         <tr>
             <th>Naam</th>
-            <th>Beschrijving</th>
+            <th></th>
             <th>Leverancier</th>
             <th>Prijs</th>
             <th>Eenheid</th>
-            <th></th>
+            <th>Opmerking</th>
         </tr>
         {% for product in object_list %}
         <tr>
             <td class="product_naam"><a href="{% url "admin:producten_simpelproduct_change" product.pk %}?next={{ request.path }}"> {{ product.naam }}</a> </td>
-            <td class="product_beschrijving">{{ product.beschrijving }}</td>
+            <td>
+                <button class="klembord_button btn btn-xs">klembord</button>
+            </td>
             <td class="product_leverancier">{{ product.leverancier.naam}}</td>
             <td class="product_prijs">{{ product.prijs}} </td>
             <td class="product_eenheid">{{ product.eenheid.afkorting }}</td>
             <td class="hidden">{{ product.klembord_lijn }}</td>
-            <td>
-                <button class="klembord_button btn btn-xs">klembord</button>
-            </td>
+            <td class="product_beschrijving">{{ product.beschrijving }}</td>
         </tr>
         {% endfor %}
-
-        <a href="{% url 'admin:producten_simpelproduct_add' %}?next={{ request.path }}">Product toevoegen</a>
-
     </table>
+
+    <form  action="{% url 'admin:producten_simpelproduct_add' %}?next={{ request.path }}">
+        <input class="btn" type="submit" value="Product toevoegen" />
+    </form>
+
     <div class="pagination">
     {% if is_paginated %}
         <ul class="pagination">

@@ -5,3 +5,11 @@
 .product_eenheid{
     text-align: left;
 }
+
+.table {
+    margin-top: 20px;
+}
+
+tr.product_beschrijving {
+    display: none;
+}

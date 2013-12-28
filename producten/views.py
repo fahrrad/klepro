@@ -14,4 +14,4 @@ class ProductenListView(FilterMixin, ListView):
     allowed_filters = {'naam': 'naam__icontains',
                        'leverancier': 'leverancier__naam__icontains'}
     model = SimpelProduct
-    paginate_by = 2
+    paginate_by = 25
