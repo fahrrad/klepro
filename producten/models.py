@@ -45,8 +45,8 @@ class SimpelProduct(Product):
     def __unicode__(self):
         return "%s (%.2f/%s)" % (self.naam, self.prijs, self.eenheid.afkorting)
 
-    def prijs_css_class(self):
-        return 'prijs_class_' + choice(['normaal', 'waarschuwing', 'fout'])
+    def prijs_code(self):
+        return choice(['normaal', 'waarschuwing', 'fout'])
 
 class SamengesteldProductLijn(models.Model):
     """Een simpel product met aantal, dat deel is van een samengesteld

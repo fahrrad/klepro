@@ -40,7 +40,7 @@
         <tr>
             <td class="product_naam"><a href="{% url "admin:producten_simpelproduct_change" product.pk %}?next={{ request.path }}"> {{ product.naam }}</a> </td>
             <td>
-                <span class="glyphicon glyphicon-euro klembord_button {{ product.prijs_css_class }}"></span>
+                <span class="glyphicon glyphicon-euro klembord_button prijs_class_{{ product.prijs_code }}"></span>
             </td>
             <td class="product_leverancier">{{ product.leverancier.naam}}</td>
             <td class="product_prijs">{{ product.prijs}} </td>
