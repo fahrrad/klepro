@@ -10,10 +10,16 @@ from producten.models import Leverancier, SimpelProduct, Eenheid
 class SimpelProductAdmin(admin.ModelAdmin):
 
     def response_change(self, request, obj):
-        return HttpResponseRedirect(request.GET['next'])
+        if 'next' in request.GET:
+            return HttpResponseRedirect(request.GET['next'])
+        else:
+            return super(SimpelProductAdmin, self).response_change(request, obj)
 
     def response_add(self, request, obj):
-        return HttpResponseRedirect(request.GET['next'])
+        if 'next' in request.GET:
+            return HttpResponseRedirect(request.GET['next'])
+        else:
+            return super(SimpelProductAdmin, self).response_change(request, obj)
 
 admin.site.register(Leverancier)
 admin.site.register(SimpelProduct, SimpelProductAdmin)

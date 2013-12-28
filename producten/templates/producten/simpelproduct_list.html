@@ -51,9 +51,10 @@
         {% endfor %}
     </table>
 
-    <form  action="{% url 'admin:producten_simpelproduct_add' %}?next={{ request.path }}">
-        <input class="btn" type="submit" value="Product toevoegen" />
-    </form>
+    <div>
+        <span class="glyphicon glyphicon-plus"></span>
+        <a href="{% url 'admin:producten_simpelproduct_add' %}?next={{ request.path }}">Product toevoegen</a>
+    </div>
 
     <div class="pagination">
     {% if is_paginated %}

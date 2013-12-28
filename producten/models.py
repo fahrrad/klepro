@@ -9,8 +9,8 @@ class Eenheid(models.Model):
     """Class staat voor een eenheid waarin een prijs kan uitgedrukt
     worden. \ vb: Liter(L), Kubiek (Kb)"""
 
-    naam = models.CharField(max_length=255)
-    afkorting = models.CharField(max_length=5)
+    naam = models.CharField(max_length=255, unique=True)
+    afkorting = models.CharField(max_length=5, unique=True)
 
     def __unicode__(self):
         return "%s (%s)" % (self.naam, self.afkorting)
@@ -20,7 +20,10 @@ class Leverancier(models.Model):
     """Class die een leverancier voorsteld"""
 
     naam = models.CharField(max_length=255)
-    email = models.EmailField(max_length=255, unique=True, blank=True)
+    email = models.EmailField(max_length=255, unique=True, null=True)
+    adres = models.CharField(max_length=255, null=True)
+    telefoon = models.CharField(max_length=255, null=True)
+    contactpersoon = models.CharField(max_length=255, null=True)
 
     def __unicode__(self):
         return "%s (%s)" % (self.naam, self.email)
