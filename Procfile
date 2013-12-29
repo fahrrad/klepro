@@ -1,1 +1,1 @@
-web: django-admin.py runserver
+web: gunicorn klepro.wsgi
