@@ -25,7 +25,11 @@
 
     </form>
 
+    <hr>
+
+
     <h3>Resultaat</h3>
+
 
     <table class="table">
         <tr>
@@ -51,9 +55,18 @@
         {% endfor %}
     </table>
 
+    <hr>
+
     <div>
+
+        <div>
+            <label for="margeInput">Marge</label>
+            <input type="text" class="percent_input form-control" value="{{ initiele_marge }}" id="margeInput">
+        </div>
+        <hr>
         <span class="glyphicon glyphicon-plus"></span>
         <a href="{% url 'admin:producten_simpelproduct_add' %}?next={{ request.path }}">Product toevoegen</a>
+
     </div>
 
     <div class="pagination">
@@ -70,6 +83,7 @@
     {% endif %}
     </div>
 {% endblock %}
+
 
 
 {% block scripts %}

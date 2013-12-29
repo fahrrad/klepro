@@ -1,5 +1,5 @@
 * DONE Veld verkoopprijs in lijst
-* Bij klik op 'klembord' => prijs * percent
+* DONE Bij klik op 'klembord' => prijs * percent
 * DONE Product is uniek per leverancier
 * DONE beschrijving => Opmerking
 * DONE bij toevoegen: error in next query string parameter missing

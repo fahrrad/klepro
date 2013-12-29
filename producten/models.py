@@ -1,6 +1,7 @@
 from random import choice
 from dateutil.relativedelta import relativedelta
 import datetime
+from decimal import Decimal
 
 from django.db import models
 

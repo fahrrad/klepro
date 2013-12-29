@@ -29,3 +29,7 @@ tr.product_beschrijving {
 .prijs_class_geen{
     text-shadow: 5px 5px 5px blue;
 }
+
+#margeInput{
+    text-align: right;
+}
