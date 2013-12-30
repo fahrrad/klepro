@@ -22,9 +22,15 @@ class ProductenListView(FilterMixin, ListView):
     def dispatch(self, request, *args, **kwargs):
         return super(ProductenListView, self).dispatch(request, *args, **kwargs)
 
-
     def get_context_data(self, **kwargs):
         context = super(ProductenListView, self).get_context_data(**kwargs)
         context['initiele_marge'] = initiele_marge
         return context
 
+
+class NaTeKijkenProductenListView(ProductenListView):
+
+    def get_queryset(self):
+        queryset = super(NaTeKijkenProductenListView, self).get_queryset()
+
+        return queryset.filter(nakijken=True)
