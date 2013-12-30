@@ -40,4 +40,8 @@ $(document).ready(function(){
 
   // initial change om de waarde te zetten die uit de template komt
   $(".percent_input").change()
+
+    $(".prijs_class_normaal").addClass("btn-default")
+    $(".prijs_class_waarschuwing").addClass("btn-warning")
+    $(".prijs_class_fout").addClass("btn-danger")
 })
