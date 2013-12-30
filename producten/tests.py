@@ -99,7 +99,9 @@ class ProductTestCase(TestCase):
             fout_beton.save()
 
 
-
+    def test_unieke_leverancier(self):
+        with self.assertRaises(IntegrityError):
+            Leverancier.objects.create(naam="VDBA", email="test_2dwefg@gmail.com")
 
 
 

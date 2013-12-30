@@ -11,7 +11,7 @@ class Eenheid(models.Model):
     worden. \ vb: Liter(L), Kubiek (Kb)"""
 
     naam = models.CharField(max_length=255, unique=True)
-    afkorting = models.CharField(max_length=5, unique=True)
+    afkorting = models.CharField(max_length=15, unique=True)
 
     def __unicode__(self):
         return "%s (%s)" % (self.naam, self.afkorting)
@@ -20,11 +20,11 @@ class Eenheid(models.Model):
 class Leverancier(models.Model):
     """Class die een leverancier voorsteld"""
 
-    naam = models.CharField(max_length=255)
-    email = models.EmailField(max_length=255, unique=True, null=True)
-    adres = models.CharField(max_length=255, null=True)
-    telefoon = models.CharField(max_length=255, null=True)
-    contactpersoon = models.CharField(max_length=255, null=True)
+    naam = models.CharField(max_length=255, unique=True)
+    email = models.EmailField(max_length=255, blank=True)
+    adres = models.CharField(max_length=255, blank=True)
+    telefoon = models.CharField(max_length=255, blank=True)
+    contactpersoon = models.CharField(max_length=255, blank=True)
 
     def __unicode__(self):
         return "%s (%s)" % (self.naam, self.email)
@@ -32,7 +32,7 @@ class Leverancier(models.Model):
 
 class Product(models.Model):
     naam = models.CharField(max_length=255)
-    beschrijving = models.CharField(max_length=4000, null=True)
+    beschrijving = models.CharField(max_length=4000, blank=True)
 
     class Meta:
         abstract = True
@@ -43,9 +43,13 @@ class SimpelProduct(Product):
 
     leverancier = models.ForeignKey(Leverancier)
     prijs = models.DecimalField(max_digits=6, decimal_places=2)
+    minimum_hoeveelheid = models.DecimalField(max_digits=6, decimal_places=2, blank=True)
     eenheid = models.ForeignKey(Eenheid)
 
-    laatste_aanpassing = models.DateField( null=True)
+
+    laatste_aanpassing = models.DateField(null=True, default=datetime.date.today())
+
+    nakijken = models.BooleanField(default=False)
 
     def klembord_lijn(self):
         return "%s\t%.2f\t%s" % (self.naam, self.prijs, self.eenheid.afkorting, )
@@ -93,14 +97,29 @@ class SamengesteldProduct(Product):
         return sum((p.simpelProduct.prijs * p.aantal for p in self.samengesteldproductlijn_set.all()))
 
 
-def import_product(naam_q, lev_q, eenheid_q, prijs):
-    leverancier = Leverancier.objects.get(naam=lev_q)
-    eenheid = Eenheid.objects.get(afkorting=eenheid_q)
-    SimpelProduct.objects.create(naam=naam_q.lower(),
-                                 leverancier=leverancier, eenheid=eenheid, prijs=prijs)
+def import_product(naam_q, prijs, eenheid_q, lev_q, minimum, datum, te_checken):
+    try:
+        leverancier = Leverancier.objects.get(naam__iexact=lev_q)
+    except:
+        leverancier = Leverancier.objects.create(naam=lev_q)
+
+    try:
+        eenheid = Eenheid.objects.get(afkorting__iexact=eenheid_q)
+    except:
+        eenheid = Eenheid.objects.create(afkorting=eenheid_q, naam=eenheid_q)
+
+    SimpelProduct.objects.create(naam=naam_q,
+                                 leverancier=leverancier, eenheid=eenheid, prijs=prijs,
+                                 minimum_hoeveelheid=minimum, nakijken=(te_checken == 1),
+                                 laatste_aanpassing=datum)
+
 
 def import_producten_file(filename):
-    for naam, leverancier, eenheid, prijs in \
-        (x.split('\t') for x in open(filename, 'rb')):
+    for naam, prijs, eenheid, leverancier, minimum, datum, check in \
+            (x.split('\t') for x in open(filename, 'rb')):
 
-        print naam, leverancier, eenheid, prijs
+        print '|'.join([naam, prijs, eenheid, leverancier, minimum,
+                        repr(datetime.datetime.strptime(datum, '%d/%m/%Y',)), check])
+
+        import_product(naam, prijs, eenheid, leverancier, minimum,
+                       datetime.datetime.strptime(datum, '%d/%m/%Y',), check)

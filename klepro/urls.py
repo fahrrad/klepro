@@ -24,5 +24,10 @@ urlpatterns = patterns('',
         regex='^$',
         view=RedirectView.as_view(url='/producten'),
         name='start',
+    ),
+    url(
+        regex='^favicon.ico$',
+        view=RedirectView.as_view(url='/static/favicon.ico'),
+        name='favicon'
     )
 )
