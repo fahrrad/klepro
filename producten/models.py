@@ -16,6 +16,9 @@ class Eenheid(models.Model):
     def __unicode__(self):
         return "%s (%s)" % (self.naam, self.afkorting)
 
+    class Meta:
+        verbose_name_plural='Eenheden'
+
 
 class Leverancier(models.Model):
     """Class die een leverancier voorsteld"""
@@ -73,6 +76,7 @@ class SimpelProduct(Product):
 
     class Meta:
         unique_together = ['naam', 'leverancier']
+        verbose_name_plural = 'producten'
 
 class SamengesteldProductLijn(models.Model):
     """Een simpel product met aantal, dat deel is van een samengesteld
