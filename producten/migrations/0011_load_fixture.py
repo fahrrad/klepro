@@ -5,6 +5,7 @@ from south.v2 import DataMigration
 from django.db import models
 
 class Migration(DataMigration):
+    """Laadt data in de database"""
 
     def forwards(self, orm):
         "Write your forwards methods here."
@@ -15,7 +16,9 @@ class Migration(DataMigration):
         call_command("loaddata", "producten/fixture.json")
 
     def backwards(self, orm):
-        "Write your backwards methods here."
+        "removes all the data from the database"
+        from django.core.management import call_command
+        call_command("flush" "--noinut")
 
     models = {
         u'producten.eenheid': {

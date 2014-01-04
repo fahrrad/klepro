@@ -3,7 +3,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.views.generic import TemplateView, RedirectView
 
-from producten.views import ProductenListView, NaTeKijkenProductenListView
+from producten.views import ProductenListView, NaTeKijkenProductenListView, downloadPrijslijst
 
 admin.autodiscover()
 
@@ -34,6 +34,10 @@ urlpatterns = patterns('',
         regex='^producten_checken/$',
         view=NaTeKijkenProductenListView.as_view(),
         name='na_te_kijken'
-
+    ),
+    url(
+        regex='^downloaden/$',
+        name='downloaden',
+        view=downloadPrijslijst,
     )
 )

@@ -17,3 +17,20 @@ tr.product_beschrijving {
 #margeInput{
     text-align: right;
 }
+
+.prijs_class_normaal{
+    text-shadow: 5px 5px 5px green;
+}
+
+.prijs_class_waarschuwing{
+    text-shadow: 5px 5px 5px orange;
+}
+
+.prijs_class_fout{
+    text-shadow: 5px 5px 5px red;
+}
+
+.prijs_class_geen{
+    text-shadow: 5px 5px 5px blue;
+}
+

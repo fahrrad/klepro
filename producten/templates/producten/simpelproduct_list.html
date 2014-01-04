@@ -44,7 +44,7 @@
         <tr>
             <td class="product_naam"><a href="{% url "admin:producten_simpelproduct_change" product.pk %}?next={{ request.path }}"> {{ product.naam }}</a> </td>
             <td>
-                <button class="klembord_button btn btn-xs prijs_class_{{ product.prijs_code }}">klembord</button>
+                <span class="glyphicon glyphicon-euro klembord_button prijs_class_{{ product.prijs_code }}"></span>
             </td>
             <td class="product_leverancier">{{ product.leverancier.naam}}</td>
             <td class="product_prijs">{{ product.prijs}} </td>
@@ -57,22 +57,31 @@
 
     <hr>
 
-    <div>
 
+    {% if na_te_kijken %}
+        <div><a href="{% url "list" %}">Alle producten</a></div>
+    {% else %}
         <div>
-            <label for="margeInput">Marge</label>
-            <input type="text" class="percent_input form-control" value="{{ initiele_marge }}" id="margeInput">
-        </div>
-        <hr>
-        <span class="glyphicon glyphicon-plus"></span>
-        <a href="{% url 'admin:producten_simpelproduct_add' %}?next={{ request.path }}">Product toevoegen</a>
 
-    </div>
+            <div>
+                <label for="margeInput">Marge</label>
+                <input type="text" class="percent_input form-control" value="{{ initiele_marge }}" id="margeInput">
+            </div>
+            <hr>
+            <span class="glyphicon glyphicon-plus"></span>
+            <a href="{% url 'admin:producten_simpelproduct_add' %}?next={{ request.path }}">Product toevoegen</a>
+
+        </div>
+        <div><a href="{% url "na_te_kijken" %}">Na te kijken</a></div>
+        <div><a href="{% url "downloaden" %}">Downloaden</a></div>
+    {% endif %}
+
+
 
     <div class="pagination">
-    {% if is_paginated %}
+        {% if is_paginated %}
         <ul class="pagination">
-                {% for pg in paginator.page_range %}
+            {% for pg in paginator.page_range %}
                     {% ifequal pg paginator.number %}
                         <li class="active"><a href="?page={{ pg }}">{{ pg }}</a></li>
                     {% else %}
@@ -82,6 +91,8 @@
         </ul>
     {% endif %}
     </div>
+
+
 {% endblock %}
 
 
