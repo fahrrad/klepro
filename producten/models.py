@@ -46,7 +46,7 @@ class SimpelProduct(Product):
 
     leverancier = models.ForeignKey(Leverancier)
     prijs = models.DecimalField(max_digits=6, decimal_places=2)
-    minimum_hoeveelheid = models.DecimalField(max_digits=6, decimal_places=2, blank=True)
+    minimum_hoeveelheid = models.DecimalField(max_digits=6, decimal_places=2, blank=True, default=0)
     eenheid = models.ForeignKey(Eenheid)
 
 

@@ -52,7 +52,7 @@
             {% else %}
                 <td></td>
             {% endif %}
-            <td class="product_naam"><a href="{% url "admin:producten_simpelproduct_change" product.pk %}?next={{ request.path }}"> {{ product.naam }}</a> </td>
+            <td class="product_naam"><a href="{% url "admin:producten_simpelproduct_change" product.pk %}?next={{ request.get_full_path }}"> {{ product.naam }}</a> </td>
             <td>
                 <span class="glyphicon glyphicon-euro klembord_button prijs_class_{{ product.prijs_code }}"></span>
             </td>
@@ -83,7 +83,7 @@
 
         <div>
             <span class="glyphicon glyphicon-plus"></span>
-            <a href="{% url 'admin:producten_simpelproduct_add' %}?next={{ request.path }}">Product toevoegen</a>
+            <a href="{% url 'admin:producten_simpelproduct_add' %}?next={{ request.get_full_path }}">Product toevoegen</a>
         </div>
 
         <div>
@@ -95,6 +95,11 @@
             <a href="{% url "downloaden" %}">Downloaden</a>
         </div>
     {% endif %}
+
+
+    <div>paginator.number {{ page }}</div>
+    <div>full path: {{ request.get_full_path }}</div>
+
 
 
 
