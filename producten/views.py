@@ -52,13 +52,13 @@ class NaTeKijkenProductenListView(ProductenListView):
 
 def downloadPrijslijst(request):
 
-    temp = codecs.open('test', 'w', 'utf-8')
+    temp = codecs.open('prijslijst', 'w', 'utf-8')
     for product in SimpelProduct.objects.filter():
         temp.write(";".join([product.naam, product.leverancier.naam, str(product.prijs), product.eenheid.afkorting]))
         temp.write('\n')
 
     temp.close()                            # for writing
-    temp = open('test')
+    temp = open('prijslijst')
     wrapper = FileWrapper(temp)
     response = HttpResponse(wrapper, content_type='text/plain; charset=utf-8')
 

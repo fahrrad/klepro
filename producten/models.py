@@ -54,6 +54,8 @@ class SimpelProduct(Product):
 
     nakijken = models.BooleanField(default=False)
 
+    img_url = models.CharField(max_length=1000, blank=True)
+
     def klembord_lijn(self):
         return "%s\t%.2f\t%s" % (self.naam, self.prijs, self.eenheid.afkorting, )
 
@@ -77,6 +79,7 @@ class SimpelProduct(Product):
     class Meta:
         unique_together = ['naam', 'leverancier']
         verbose_name_plural = 'producten'
+        ordering = ["naam"]
 
 class SamengesteldProductLijn(models.Model):
     """Een simpel product met aantal, dat deel is van een samengesteld

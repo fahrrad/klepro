@@ -33,6 +33,7 @@
 
     <table class="table">
         <tr>
+            <th><span class="glyphicon glyphicon-search"></span></th>
             <th>Naam</th>
             <th>Kopieer</th>
             <th>Leverancier</th>
@@ -41,7 +42,16 @@
             <th>Opmerking</th>
         </tr>
         {% for product in object_list %}
-        <tr>
+            <tr>
+            {% if product.img_url %}
+                <td>
+                    <a href={{ product.img_url }} data-lightbox="image-{{ product.naam }}">
+                        <span class="glyphicon glyphicon-picture"></span>
+                    </a>
+                </td>
+            {% else %}
+                <td></td>
+            {% endif %}
             <td class="product_naam"><a href="{% url "admin:producten_simpelproduct_change" product.pk %}?next={{ request.path }}"> {{ product.naam }}</a> </td>
             <td>
                 <span class="glyphicon glyphicon-euro klembord_button prijs_class_{{ product.prijs_code }}"></span>
@@ -59,21 +69,31 @@
 
 
     {% if na_te_kijken %}
-        <div><a href="{% url "list" %}">Alle producten</a></div>
+        <div>
+            <span class="glyphicon glyphicon-eye-close"></span>
+            <a href="{% url "list" %}">Alle producten</a>
+        </div>
     {% else %}
         <div>
+            <label for="margeInput">Marge</label>
+            <input type="text" class="percent_input form-control" value="{{ initiele_marge }}" id="margeInput">
+        </div>
 
-            <div>
-                <label for="margeInput">Marge</label>
-                <input type="text" class="percent_input form-control" value="{{ initiele_marge }}" id="margeInput">
-            </div>
-            <hr>
+        <hr>
+
+        <div>
             <span class="glyphicon glyphicon-plus"></span>
             <a href="{% url 'admin:producten_simpelproduct_add' %}?next={{ request.path }}">Product toevoegen</a>
-
         </div>
-        <div><a href="{% url "na_te_kijken" %}">Na te kijken</a></div>
-        <div><a href="{% url "downloaden" %}">Downloaden</a></div>
+
+        <div>
+            <span class="glyphicon glyphicon-eye-open"></span>
+            <a href="{% url "na_te_kijken" %}">Na te kijken</a>
+        </div>
+        <div>
+            <span class="glyphicon glyphicon-download"></span>
+            <a href="{% url "downloaden" %}">Downloaden</a>
+        </div>
     {% endif %}
 
 
@@ -99,10 +119,12 @@
 
 {% block scripts %}
     <script src="{% static "producten/main.js" %}" ></script>
+    <script src="{% static "js/lightbox-2.6.min.js" %}" ></script>
 {% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{% static "producten/stylesheet.css" %}">
+    <link href="{% static "css/lightbox.css" %}" rel="stylesheet" />
 {% endblock %}
 
 

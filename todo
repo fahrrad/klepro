@@ -5,9 +5,9 @@
 * DONE bij toevoegen: error in next query string parameter missing
 * DONE Leveranciers: adres, telefoon,  contactpersoon
 * DONE kleurcodes : 3 ( 1 jaar, 2 jaar) voor prijzen laatste aanpassing
-* is Foto toevoegen veel werk??
-* "Te controleren" vlag
-* Download laatste versie knop
+* DONE is Foto toevoegen veel werk??
+* DONE "Te controleren" vlag
+* DONE Download laatste versie knop
 * DONE eenheden niet uniek
 * DONE beschrijving niet verplicht maken in admin
 * DONE deployen naar Heroku
