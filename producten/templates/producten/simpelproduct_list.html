@@ -52,11 +52,15 @@
             {% else %}
                 <td></td>
             {% endif %}
-            <td class="product_naam"><a href="{% url "admin:producten_simpelproduct_change" product.pk %}?next={{ request.get_full_path }}"> {{ product.naam }}</a> </td>
+            <td class="product_naam">
+                <a href="{% url "admin:producten_simpelproduct_change" product.pk %}?next={{ request.get_full_path }}">
+                {{ product.naam }}</a> </td>
             <td>
                 <span class="glyphicon glyphicon-euro klembord_button prijs_class_{{ product.prijs_code }}"></span>
             </td>
-            <td class="product_leverancier">{{ product.leverancier.naam}}</td>
+            <td class="product_leverancier">
+                <a href="{% url "admin:producten_leverancier_change" product.leverancier.pk %}?next={{ request.get_full_path }}">
+                {{ product.leverancier.naam}}</a></td>
             <td class="product_prijs">{{ product.prijs}} </td>
             <td class="product_eenheid">{{ product.eenheid.afkorting }}</td>
             <td class="hidden">{{ product.klembord_lijn }}</td>
@@ -88,20 +92,13 @@
 
         <div>
             <span class="glyphicon glyphicon-eye-open"></span>
-            <a href="{% url "na_te_kijken" %}">Na te kijken</a>
+            <a href="{% url "na_te_kijken" %}">{{ na_te_kijken_count }} Na te kijken</a>
         </div>
         <div>
             <span class="glyphicon glyphicon-download"></span>
             <a href="{% url "downloaden" %}">Downloaden</a>
         </div>
     {% endif %}
-
-
-    <div>paginator.number {{ page }}</div>
-    <div>full path: {{ request.get_full_path }}</div>
-
-
-
 
     <div class="pagination">
         {% if is_paginated %}

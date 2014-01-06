@@ -31,6 +31,8 @@ class ProductenListView(FilterMixin, ListView):
         context = super(ProductenListView, self).get_context_data(**kwargs)
         context['initiele_marge'] = initiele_marge
         context['na_te_kijken'] = False
+        c = SimpelProduct.objects.filter(nakijken=True).count()
+        context['na_te_kijken_count'] = c if c else 'Geen'
         return context
 
 

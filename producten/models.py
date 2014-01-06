@@ -18,6 +18,7 @@ class Eenheid(models.Model):
 
     class Meta:
         verbose_name_plural='Eenheden'
+        ordering = ['naam']
 
 
 class Leverancier(models.Model):
@@ -31,6 +32,9 @@ class Leverancier(models.Model):
 
     def __unicode__(self):
         return "%s (%s)" % (self.naam, self.email)
+
+    class Meta:
+        ordering = ['naam']
 
 
 class Product(models.Model):
@@ -52,7 +56,7 @@ class SimpelProduct(Product):
 
     laatste_aanpassing = models.DateField(null=True, default=datetime.date.today())
 
-    nakijken = models.BooleanField(default=False)
+    nakijken = models.BooleanField(default=True)
 
     img_url = models.CharField(max_length=1000, blank=True)
 

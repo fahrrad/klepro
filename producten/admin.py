@@ -21,7 +21,15 @@ class SimpelProductAdmin(admin.ModelAdmin):
         else:
             return super(SimpelProductAdmin, self).response_change(request, obj)
 
-admin.site.register(Leverancier)
+
+class LeverancierAdmin(admin.ModelAdmin):
+    def response_change(self, request, obj):
+        if 'next' in request.GET:
+            return HttpResponseRedirect(request.GET['next'])
+        else:
+            return super(LeverancierAdmin, self).response_change(request, obj)
+
+admin.site.register(Leverancier, LeverancierAdmin)
 admin.site.register(SimpelProduct, SimpelProductAdmin)
 admin.site.register(Eenheid)
 
