@@ -58,7 +58,7 @@ class SimpelProduct(Product):
 
     nakijken = models.BooleanField(default=True)
 
-    img_url = models.CharField(max_length=1000, blank=True)
+    img_url = models.CharField(max_length=1000, blank=True, default='')
 
     def klembord_lijn(self):
         return "%s\t%.2f\t%s" % (self.naam, self.prijs, self.eenheid.afkorting, )

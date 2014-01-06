@@ -32,7 +32,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 SECRET_KEY = '+zqa1$uua2e)5ykc9^q@!m@4@2e9$lfpdj)k1uihb-*-0k2im%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
