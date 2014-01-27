@@ -1,26 +1,43 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<!-- saved from url=(0040)http://getbootstrap.com/examples/signin/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/static/favicon.png">
 
-{% block content %}
+    <title>Inloggen klepro</title>
 
+    <!-- Bootstrap core CSS -->
+    <link href="http://getbootstrap.com/dist/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="http://getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
+
+  <style type="text/css"></style></head>
+
+  <body>
     {% if form.errors %}
-        <p>Your username and password didn't match. Please try again.</p>
+        <div class="alert">
+          <p>Foute login/passwoord</p>
+        </div>
     {% endif %}
 
-    <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
-        {% csrf_token %}
-        <table>
-            <tr>
-                <td>{{ form.username.label_tag }}</td>
-                <td>{{ form.username }}</td>
-            </tr>
-            <tr>
-                <td>{{ form.password.label_tag }}</td>
-                <td>{{ form.password }}</td>
-            </tr>
-       </table>
 
-       <input type="submit" value="login" />
-       <input type="hidden" name="next" value="{{ next }}" />
-   </form>
+    <div class="container">
 
-{% endblock %}
+      <form class="form-signin" role="form" method="post" 
+            action="{% url 'django.contrib.auth.views.login' %}">
+    {% csrf_token %}
+
+        <h2 class="form-signin-heading">Inloggen</h2>
+        <input id="username" name="username" type="text" class="form-control" placeholder="Naam" required="" autofocus="">
+        <input id="password" name="password" type="password" class="form-control" placeholder="Password" required="">
+        <input type="hidden" name="next" value="{{ next }}" />
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
+      </form>
+
+    </div>
+</body></html>
