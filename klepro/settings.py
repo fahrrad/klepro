@@ -19,10 +19,11 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 PYTHONIOENCODING='utf-8'
 
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.core.context_processors.request',
-    'django.contrib.auth.context_processors.auth',
-)
+TEMPLATE_CONTEXT_PROCESSORS = ("django.core.context_processors.debug",
+                               "django.core.context_processors.i18n",
+                               "django.core.context_processors.media",
+                               "django.core.context_processors.request",
+                               "django.contrib.auth.context_processors.auth",)
 
 
 # Quick-start development settings - unsuitable for production
@@ -51,6 +52,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'producten',
     'south',
+    'pagination',
 
 )
 
@@ -61,6 +63,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'pagination.middleware.PaginationMiddleware',
 )
 
 ROOT_URLCONF = 'klepro.urls'

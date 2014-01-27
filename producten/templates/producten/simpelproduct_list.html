@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% load admin_urls %}
 {% load staticfiles %}
+{% load pagination_tags %}
+
+{% autopaginate object_list 25 %}
 
 {% block content %}
     <h1>Producten</h1>
@@ -100,20 +103,9 @@
         </div>
     {% endif %}
 
-    <div class="pagination">
-        {% if is_paginated %}
-        <ul class="pagination">
-            {% for pg in paginator.page_range %}
-                    {% ifequal pg paginator.number %}
-                        <li class="active"><a href="?page={{ pg }}">{{ pg }}</a></li>
-                    {% else %}
-                        <li><a href="?page={{ pg }}">{{ pg }}</a></li>
-                    {% endifequal %}
-                {% endfor %}
-        </ul>
-    {% endif %}
-    </div>
-
+        <div class="pagination">
+          {% paginate %}
+        </div>
 
 {% endblock %}
 
